@@ -1,36 +1,38 @@
 <script lang="coffee">
-KEYCODES= COMMA: 188
-Vue.config.keyCodes.comma= KEYCODES.COMMA
-focus= ->
-  return if @readOnly or not $newTag= @$el.querySelector(".new-tag")
-  $newTag.focus()
-add= (e)->
+import Vue from "vue"
+Vue.config.keyCodes.comma= 188
 
-data= ->
-  active: no
-  readOnly: no
-  newTag: ""
-export default data: data, methods: {focus}
+export default
+  props: readOnly: no, value: default: ->[]
+  data: -> active: no, newTag: "", tags: [@value...]
+  watch:
+    tags: (val)->@$emit "update:tags", val;@$emit "input", val
+    value: ->@tags= [@value...]
+  methods:
+    focus: ->if not @readOnly then @$el.querySelector(".new-tag")?.focus()
+    add: ->@tags.push @newTag;@newTag= ""
+    pop: ->@tags.pop() if @newTag is ""
+    remove: (index)->@tags.splice(index, 1)
 </script>
 <template lang="pug">
-  #easinput(@click="focus"  :class="{'read-only': readOnly, active: active}")
-    span(v-for="(item, index) in tags"  :key="index" class="tag")
+  .easinput(@click="focus"  :class="{'read-only': readOnly, active: active}")
+    span.tag(v-for="(item, index) in tags"  :key="index")
       span {{item}}
       a.remove(v-if="!readOnly"  @click.prevent.stop="remove(index)")
     input.new-tag(
       type="text" placeholder="new tag"
-      v-show="!readOnly"
+      v-if="!readOnly"
       v-model="newTag"
-      @keydown.delete.stop="removeLastTag"
-      @keydown.enter="add"
-      @keydown.comma="add"
-      @keydown.tab="add"
-      @blur="blurInput"
-      @focus="focusInput"
+      @keydown.delete.stop="pop"
+      @keydown.enter.prevent="add"
+      @keydown.comma.prevent="add"
+      @keydown.tab.prevent="add"
+      @blur="active= false"
+      @focus="active= true"
     )
 </template>
 <style lang="scss">
-  #easinput{
+  .easinput{
     width: 100%;height: 3rem;
     border: 1px solid #CCC;border-radius: 8px;
     appearance: textfield;cursor: text;

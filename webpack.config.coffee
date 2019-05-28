@@ -19,6 +19,8 @@ module.exports=
         test: /\.js$/, use: [babelLoader], exclude: /node_modules/
       COFFEE:
         test: /\.coffee$/, use: [babelLoader, {loader: "coffee-loader"}]
+      YAML:
+        test: /\.ya?ml$/i, loader: "json-loader!yaml-loader"
       VUE:
         test: /\.vue$/, loader: "vue-loader"
       PUG:

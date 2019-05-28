@@ -1,5 +1,6 @@
 <script lang="coffee">
-  import Easinput from "Easinput.vue"
+  # import Easinput from "Easinput_tokened.vue"
+  import Easinput from "Easinput_suggested.vue"
   export default components: {Easinput}
 </script>
 <template lang="pug">
