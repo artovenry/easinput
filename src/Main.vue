@@ -1,12 +1,13 @@
 <script lang="coffee">
   import Easinput from "Easinput.vue"
-  export default components: {Easinput}, data: ->value: "とても"
+  # export default components: {Easinput}, data: ->value: "成城石井のチーズケーキと、しろまつがモナカ"
+  export default components: {Easinput}, data: ->value: "チーズケーキ"
 </script>
 <template lang="pug">
   #root
     .container
       h1 easinput
-      h2 {{value}}
+      h2(style="width:100%;overflow:scroll;word-break: break-all;") {{value}}
       p: input(type="text" v-model="value")
       Easinput(v-model="value")
 </template>

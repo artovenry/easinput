@@ -68,37 +68,38 @@ export default
         ) {{item.value}}
 </template>
 <style lang="scss">
+  // GLOBAL
+  input[type='text']{margin:0;padding:0;}
+
+
+  @mixin layout{
+    &-wrapper{
+      width: 100%;padding: .5rem .25rem .5rem .25rem;
+      display: flex; flex-wrap: wrap;
+      align-items: center;
+      font-size: .8rem;
+    }
+    word-break: break-all;
+    &, &--query{padding: .3em!important;}
+    &, &--query{margin:.5em!important;}
+    &--query{flex-grow: 1;width: 50%;}
+  }
+
   .easinput{
     width: 100%;
     position: relative;
     &--token{
-
-
-
-      // LAYOUT
-        // margin-right: 1em;
-        // padding: 0 8px 0 8px;
+      @include layout;
       &-wrapper{
-        display: flex;
-        flex-flow: row wrap;
-      }
-      flex: 0 1 50%;
-      &--query{
-        flex: 1 1 50%;
-      }
-
-      &-wrapper{
-        // appearance: textfield;cursor: text;
         border: 1px solid #CCC;border-radius: 8px;
-        padding: 0 8px 0 8px;
-        min-height: 3rem;
-        width: 100%;
+        // appearance: textfield;cursor: text;
       }
-      background: rgb(143, 236, 194);color: rgb(50, 50, 50);
-      border-radius: 4px;
+      &, &--query{
+        background: rgb(143, 236, 194);color: rgb(50, 50, 50);
+        border-radius: 4px;
+      }
       &--query{
-        border: 0;background: transparent;outline: none;
-        background: gray;
+        border: 0;outline: none;
       }
     }
 
